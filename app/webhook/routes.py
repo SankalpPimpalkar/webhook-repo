@@ -4,12 +4,12 @@ import uuid
 from app.extensions import mongo
 
 webhook = Blueprint('Webhook', __name__, url_prefix='/webhook')
-collection = mongo.db.events
 
 @webhook.route('/receiver', methods=["POST"])
 def receiver():
     payload = request.json
     event_type = request.headers.get('X-GitHub-Event')
+    collection = mongo.db.get_collection(name='events')
 
     # Schema for mongodb document to track events
     doc = {
@@ -56,6 +56,9 @@ def receiver():
 @webhook.route('/events', methods=["GET"])
 def get_events():
     action = request.args.get('action')
+    print(mongo.db)
+    collection = mongo.db.get_collection(name='events')
+
     query = { "action": action } if action else {} 
     # I added an extra feature for filtering events based on actions
 

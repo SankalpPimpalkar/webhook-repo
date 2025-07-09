@@ -1,22 +1,27 @@
-from flask import Flask
-from extensions import mongo
-from app.webhook.routes import webhook
-
+from flask import Flask, jsonify
+from app.extensions import dbconnect,mongo
 
 # Creating our flask app
 def create_app():
 
     app = Flask(__name__)
 
-    # Configurations
-    app.config["MONGO_URI"] = "mongodb+srv://test:sp5tfHCtdC7Nd6OW@test.pcwr8.mongodb.net/?retryWrites=true&w=majority&appName=test"
-    mongo.init_app(app=app)
+    # Database connection
+    dbconnect(app=app)
 
     @app.route('/', methods=['GET'])
     def home():
-        return "App is running"
+        print(mongo.db)
+        return jsonify({
+            "success": True,
+            "message": "App is running",
+            "payload": {
+                "mongodb": mongo.db.name,
+            }
+        })
     
     # registering all the blueprints
+    from app.webhook.routes import webhook
     app.register_blueprint(webhook)
     
     return app
