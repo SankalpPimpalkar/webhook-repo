@@ -18,7 +18,7 @@ def receiver():
         "action": None,
         "from_branch": None,
         "to_branch": None,
-        "timestamp": datetime.utcnow()
+        "timestamp": datetime.timezone.utc
     }
 
     if event_type == "push":
