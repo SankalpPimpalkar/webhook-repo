@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from app.extensions import dbconnect,mongo
+from app.extensions import dbconnect
 from flask_cors import CORS
 import os
 
