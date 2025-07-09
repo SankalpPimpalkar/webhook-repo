@@ -1,10 +1,13 @@
 from flask import Flask, jsonify
 from app.extensions import dbconnect,mongo
+from flask_cors import CORS
 
 # Creating our flask app
 def create_app():
 
     app = Flask(__name__)
+    # Configuration
+    CORS(app=app)
 
     # Database connection
     dbconnect(app=app)
