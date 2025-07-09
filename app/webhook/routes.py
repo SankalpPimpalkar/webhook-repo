@@ -1,9 +1,10 @@
 from flask import Blueprint, jsonify, request
 import datetime
 import uuid
-from app.extensions import collection
+from app.extensions import mongo
 
 webhook = Blueprint('Webhook', __name__, url_prefix='/webhook')
+collection = mongo.db.events
 
 @webhook.route('/receiver', methods=["POST"])
 def receiver():

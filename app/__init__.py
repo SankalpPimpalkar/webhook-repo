@@ -1,5 +1,5 @@
 from flask import Flask
-
+from extensions import mongo
 from app.webhook.routes import webhook
 
 
@@ -7,6 +7,10 @@ from app.webhook.routes import webhook
 def create_app():
 
     app = Flask(__name__)
+
+    # Configurations
+    app.config["MONGO_URI"] = "mongodb+srv://test:sp5tfHCtdC7Nd6OW@test.pcwr8.mongodb.net/?retryWrites=true&w=majority&appName=test"
+    mongo.init_app(app=app)
 
     @app.route('/', methods=['GET'])
     def home():
